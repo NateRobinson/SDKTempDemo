@@ -22,4 +22,11 @@
         android:text="Page Query temp demo"
         android:textAllCaps="false"/>
 
+    <Button
+        android:id="@+id/go_subscription_btn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Subscription temp demo"
+        android:textAllCaps="false"/>
+
 </LinearLayout>

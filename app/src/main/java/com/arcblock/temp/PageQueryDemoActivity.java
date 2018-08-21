@@ -20,7 +20,6 @@ import com.arcblock.temp.btc.type.PageInput;
 import com.google.gson.Gson;
 import com.yuyh.jsonviewer.library.JsonRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PageQueryDemoActivity extends AppCompatActivity {
@@ -31,7 +30,6 @@ public class PageQueryDemoActivity extends AppCompatActivity {
 	private int startIndex = 448244;
 	private int endIndex = 448264;
 	private CoreKitPagedViewModel<BlocksByHeightQuery.Data, BlocksByHeightQuery.Datum> mBlocksByHeightQueryViewModel;
-	private List<BlocksByHeightQuery.Datum> mBlocks = new ArrayList<>();
 	private CoreKitPagedHelper coreKitPagedHelper;
 	private boolean isFirstIn;
 

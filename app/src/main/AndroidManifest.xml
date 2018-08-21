@@ -29,6 +29,10 @@
             android:name=".PageQueryDemoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
+        <activity
+            android:name=".SubscriptionDemoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing"/>
     </application>
 
 </manifest>
