@@ -1,6 +1,12 @@
-# FAQ 列表
+#### FAQ 列表
 
 ### 1. 为什么我直接 implementation 提示找不到这个仓库？
+
+编译错误信息：
+
+```
+Unable to resolve dependency for ':app@debug/compileClasspath': Could not resolve com.arcblock.corekit:absdkcorekit:x.x.x.
+```
 
 目前我们的 sdk 还没有完全对外开放，所以只有在 white ip list 里面的网络环境下才能成功 implementation
 
@@ -11,7 +17,7 @@
  
 ```
 apollo {
-	customTypeMapping['DateTime'] = "java.util.Date"
+  customTypeMapping['DateTime'] = "java.util.Date"
 }
 ```
 
@@ -22,7 +28,7 @@ get，set 方法
 
 ```
 apollo {
-	useJavaBeansSemanticNaming = true
+  useJavaBeansSemanticNaming = true
 }
 ```
 
@@ -33,7 +39,7 @@ apollo {
 
 这里需要注意一点，如果更改了schema.json 和 .graphql 文件存放的路径，需要执行一下 clean 操作，不然可能会有报错。
 
-### 5. 初始化 ABCoreKitClient 的时候，会传一个 ResponseFetcher 对象进去，这个是干嘛用的？
+### 5. 初始化 ABCoreKitClient 的时候，会传一个 ResponseFetcher 对象进去，这个用处是什么？
 
 这个是用来定义不同的 fetch 规则的，apollo 一共提供了 5 种规则供我们直接使用，具体见 ApolloResponseFetchers.java 文件：
 
@@ -43,4 +49,36 @@ apollo {
 - NETWORK_FIRST  先从 net 取数据，没有或者失败了再去 cache 取
 - CACHE_AND_NETWORK  同时去 cache 和 net 取数据，这里会多次返回数据给 View 层
 
+### 6. .graphql 文件内容格式的要求？
 
+通常我们会先在 [OCAP Playground](https://ocap.arcblock.io/) 里面编写和检验我们需要的 query, mutation, subscription 业务语句，确认没有问题之后，再复制对应内容到我们在 Project 中创建的 .graphql 文件中。
+
+但是这里填入 .graphql 文件的 query, mutation, subscription 需要具名的，并且参数需要实时传入而非写死在语句中，看下面的示例：
+
+**错误例子：**
+
+```
+{
+blocksByHeight(fromHeight: 1, paging: { size: 2 }){
+  data {
+    height
+    hash
+    }
+  }
+}
+```
+
+**正确方式：** 
+
+```
+query getBlocksByHeight($from:Int!, $paging:PageInput){
+  blocksByHeight(fromHeight: $from, paging: $paging) {
+    data {
+      height
+      hash
+    }
+  }
+}
+```
+
+使用正确的方式，apollo code gen plugin 才可以正确的识别并生成对应 java 代码
