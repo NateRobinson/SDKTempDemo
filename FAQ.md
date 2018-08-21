@@ -37,7 +37,8 @@ apollo {
 只要将其放到 /main/graphql/ 这个路径下即可，在下面可以再添加更多级的子目录，只要保证对应的 schema.json 和 .graphql 文件在同级目录下即可。
 比如 /main/graphql/a/b/c/A.graphl 会被 gen code plugin 自动生成包路径为： a.b.c ,名称为 A.java 的文，gen code 规则是根据同路径下的 schema.json 文件。
 
-这里需要注意一点，如果更改了schema.json 和 .graphql 文件存放的路径，需要执行一下 clean 操作，不然可能会有报错。
+- 注意点1：如果更改了 schema.json 和 .graphql 文件存放的路径，需要执行一下 clean 操作，不然可能会有报错。
+- 注意点2：一个存放了 schema.json 的文件夹内至少存在一个 .graphql 文件，否则会引起 build 错误
 
 ### 5. 初始化 ABCoreKitClient 的时候，会传一个 ResponseFetcher 对象进去，这个用处是什么？
 
@@ -82,3 +83,5 @@ query getBlocksByHeight($from:Int!, $paging:PageInput){
 ```
 
 使用正确的方式，apollo code gen plugin 才可以正确的识别并生成对应 java 代码
+
+
