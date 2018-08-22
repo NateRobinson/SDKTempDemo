@@ -1,4 +1,7 @@
 # ArcBlock Android SDKTempDemo
+
+[README of Chinese](https://github.com/NateRobinson/SDKTempDemo/blob/master/README_CN.md)
+
 This is a template demo project to make developers integrate [ArcBlock Android SDK](https://github.com/ArcBlock/arcblock-android-sdk) quickly.
 
 ## Quickly Start
