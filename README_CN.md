@@ -1,6 +1,6 @@
 # ArcBlock Android SDKTempDemo
 
-这是一个帮助开发者快速上手 [ArcBlock Android SDK](https://github.com/ArcBlock/arcblock-android-sdk) 的使用的模板 Demo 项目，可以帮助开发者更快的集成 SDK 并进行相关功能开发。
+这是一个帮助开发者快速上手 [ArcBlock Android SDK](https://github.com/ArcBlock/arcblock-android-sdk) 使用的模板 Demo 项目。
 
 ## 快速开始
 
@@ -14,7 +14,7 @@
 
 *如果在开发过程中遇到了其他问题，可以与我们的开发支持及时沟通，我们将全力帮助开发者解决遇到的问题。*
 
-## 基于 ArcBlock Android SDK 开发的 Demo App 列表
+## 基于 ArcBlock Android SDK 开发的 App 列表
 
 1. [BBViewer](https://github.com/NateRobinson/BBViewer)
 	
