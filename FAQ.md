@@ -1,19 +1,18 @@
-# FAQ 列表
+# FAQ List
 
-### 1. 为什么我直接 implementation 提示找不到这个仓库？
+### 1. Why can't I get the Library by implementation ?
 
-编译错误信息：
+the build error message like this ：
 
 ```
 Unable to resolve dependency for ':app@debug/compileClasspath': Could not resolve com.arcblock.corekit:absdkcorekit:x.x.x.
 ```
 
-目前我们的 sdk 还没有完全对外开放，所以只有在 white ip list 里面的网络环境下才能成功 implementation
+Now our SDK is not open source yet, so only the network environment int the white ip list can get it.
 
-### 2. 一定需要在初始化 ABCoreKitClient 的时候设置 CustomTypeAdapter 吗？
+### 2. Do I have to set the CustomTypeAdapter when initializing ABCoreKitClient ？
 
-不是必须的 ，但是为了能自动识别我们 schema.json 里面的 CustomTypeAdapter ，我们必须要在 app.build
- 文件中设置好下列代码, 这样 gen code plugin 才能自动的识别对应的 CustomType：
+Not required, but in order to automatically identify our CustomTypeAdapter in schema.json, we have to do this in app.build Set the following code in the file so that generate code plugin can automatically recognize the corresponding CustomType:
  
 ```
 apollo {
@@ -21,10 +20,9 @@ apollo {
 }
 ```
 
-### 3. 为什么我 gen 出来的 Bean 对象中的属性没有对应的 getXX，setXX 方法?
+### 3. Why is there no getXX, setXX method for the properties of the Bean object that I came up with generate code plugin?
 
-apollo gen code 有个 custom 的配置，我们同样需要添加下列代码显式的告诉 gen code plugin, 不然他生成的 Bean 对象的属性会以 public 的形式存在，不会有
-get，set 方法
+Apollo generate code has a custom configuration, and we also need to add the following code to explicitly tell generate code plugin, otherwise the properties of the Bean object he generated would exist as public and would not exist Get, set method
 
 ```
 apollo {
@@ -32,31 +30,47 @@ apollo {
 }
 ```
 
-### 4. schema.json 和 .graphql 文件存放的路径有特殊要求吗？
+### 4. Are there any special requirements for the paths that the schema.json and .graphql files hold?
 
-只要将其放到 /main/graphql/ 这个路径下即可，在下面可以再添加更多级的子目录，只要保证对应的 schema.json 和 .graphql 文件在同级目录下即可。
-比如 /main/graphql/a/b/c/A.graphl 会被 gen code plugin 自动生成包路径为： a.b.c ,名称为 A.java 的文，gen code 规则是根据同路径下的 schema.json 文件。
+Just put it under the `/main/graphql/` path, and you can add more subdirectories below, just make sure the corresponding `schema.json` and `.graphql` files are in the same directory.
 
-- 注意点1：如果更改了 schema.json 和 .graphql 文件存放的路径，需要执行一下 clean 操作，不然可能会有报错。
-- 注意点2：一个存放了 schema.json 的文件夹内至少存在一个 .graphql 文件，否则会引起 build 错误
+Such as `/main/graphql/a/b/c/A.graphql` will be generate code automatically generated plugin package path is: `a.b.c`, and name is `A.java`, generate code rule is according to the same directory `schema.json` .
 
-### 5. 初始化 ABCoreKitClient 的时候，会传一个 ResponseFetcher 对象进去，这个用处是什么？
+- **Note 1**： if you change the path that the `schema.json` and `.graphql` files hold, you need to perform a `build clean` operation, otherwise you might get an error.
 
-这个是用来定义不同的 fetch 规则的，apollo 一共提供了 5 种规则供我们直接使用，具体见 ApolloResponseFetchers.java 文件：
+- **Note 2**：at least one `.graphql` file exists in a folder that holds `schema.json`, otherwise you'll get build errors.
 
-- CACHE_ONLY  只从 cache 取数据
-- NETWORK_ONLY  只从 net 取数据
-- CACHE_FIRST  先从 cache 取数据，没有或者失败了再去 net 取
-- NETWORK_FIRST  先从 net 取数据，没有或者失败了再去 cache 取
-- CACHE_AND_NETWORK  同时去 cache 和 net 取数据，这里会多次返回数据给 View 层
+### 5. When you initialize ABCoreKitClient, you pass in a `ResponseFetcher` object. What's the use?
 
-### 6. .graphql 文件内容格式的要求？
+This is used to define different fetch rules, Apollo provides a total of five rules for our direct use, specific see `ApolloResponseFetchers.java`:
 
-通常我们会先在 [OCAP Playground](https://ocap.arcblock.io/) 里面编写和检验我们需要的 query, mutation, subscription 业务语句，确认没有问题之后，再复制对应内容到我们在 Project 中创建的 .graphql 文件中。
+- CACHE_ONLY :
 
-但是这里填入 .graphql 文件的 query, mutation, subscription 需要具名的，并且参数需要实时传入而非写死在语句中，看下面的示例：
+  > Only get data from cache
+  
+- NETWORK_ONLY : 
+	
+  > Only get data from net
 
-**错误例子：**
+- CACHE_FIRST :
+
+  > Get the data from cache first, and then go to net if it is not available or fails
+
+- NETWORK_FIRST :
+
+  > First fetch data from net, no or fail to cache
+
+- CACHE_AND_NETWORK :
+
+  > Fetch data from cache and net at the same time, and the data will return multiple times to the View layer 
+
+### 6. What are the requirements for the content format of the graphql file?
+
+Usually, we will first in [OCAP Playground] (https://ocap.arcblock.io/) write and test we need to query, mutation, subscription business statement, make sure no problem, then copy the corresponding content to we created in the Project `.graphql`.
+
+Here you fill in the `query`, `mutation`, `subscription` of `.graphql` file and need to be named, and the parameters need to be passed in real time rather than written down in the statement. See the following example:
+
+**The wrong case :**
 
 ```
 {
@@ -69,7 +83,7 @@ blocksByHeight(fromHeight: 1, paging: { size: 2 }){
 }
 ```
 
-**正确方式：** 
+**The right way :** 
 
 ```
 query getBlocksByHeight($from:Int!, $paging:PageInput){
@@ -82,6 +96,6 @@ query getBlocksByHeight($from:Int!, $paging:PageInput){
 }
 ```
 
-使用正确的方式，apollo code gen plugin 才可以正确的识别并生成对应 java 代码
+In the right way, the Apollo code generate plugin can correctly identify and generate the corresponding Java code
 
 

@@ -10,7 +10,7 @@
 
 ## 可能遇到的问题
 
-这里我们列出了开发者在集成开发过程中可能遇到的问题清单：[FAQ List](https://github.com/NateRobinson/SDKTempDemo/blob/master/FAQ.md) 。
+这里我们列出了开发者在集成开发过程中可能遇到的问题清单：[FAQ List](https://github.com/NateRobinson/SDKTempDemo/blob/master/FAQ_CN.md) 。
 
 *如果在开发过程中遇到了其他问题，可以与我们的开发支持及时沟通，我们将全力帮助开发者解决遇到的问题。*
 
