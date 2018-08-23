@@ -18,11 +18,11 @@
 
 1. [BBViewer](https://github.com/NateRobinson/BBViewer)
 	
-	> A BTC Block Viewer App based on ArcBlock OCAP Service API.
+	> A BTC Block Viewer App based on ArcBlock Android SDK .
 	 
 2. [BATool](https://github.com/NateRobinson/BATool)
 
-	> A BTC Account Tool based on ArcBlock OCAP Service API.
+	> A BTC Account Tool based on ArcBlock Android SDK .
 	
 3. More to come... 
 
