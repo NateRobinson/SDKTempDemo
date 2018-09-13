@@ -7,35 +7,35 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-		initView();
-	}
+        initView();
+    }
 
-	private void initView() {
-		findViewById(R.id.go_query_btn).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, QueryDemoActivity.class);
-				startActivity(intent);
-			}
-		});
-		findViewById(R.id.go_page_query_btn).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, PageQueryDemoActivity.class);
-				startActivity(intent);
-			}
-		});
-		findViewById(R.id.go_subscription_btn).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, SubscriptionDemoActivity.class);
-				startActivity(intent);
-			}
-		});
-	}
+    private void initView() {
+        findViewById(R.id.go_query_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, QueryDemoActivity.class);
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.go_page_query_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PageQueryDemoActivity.class);
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.go_subscription_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SubscriptionDemoActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 }

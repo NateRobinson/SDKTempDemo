@@ -1,16 +1,6 @@
 # FAQ List
 
-### 1. Why can't I get the Library by implementation ?
-
-the build error message like this ：
-
-```
-Unable to resolve dependency for ':app@debug/compileClasspath': Could not resolve com.arcblock.corekit:absdkcorekit:x.x.x.
-```
-
-Now our SDK is not open source yet, so only the network environment int the white ip list can get it.
-
-### 2. Do I have to set the CustomTypeAdapter when initializing ABCoreKitClient ？
+### 1. Do I have to set the CustomTypeAdapter when initializing ABCoreKitClient ？
 
 Not required, but in order to automatically identify our CustomTypeAdapter in schema.json, we have to do this in app.build Set the following code in the file so that generate code plugin can automatically recognize the corresponding CustomType:
  
@@ -20,7 +10,7 @@ apollo {
 }
 ```
 
-### 3. Why is there no getXX, setXX method for the properties of the Bean object that I came up with generate code plugin?
+### 2. Why is there no getXX, setXX method for the properties of the Bean object that I came up with generate code plugin?
 
 Apollo generate code has a custom configuration, and we also need to add the following code to explicitly tell generate code plugin, otherwise the properties of the Bean object he generated would exist as public and would not exist Get, set method
 
@@ -30,7 +20,7 @@ apollo {
 }
 ```
 
-### 4. Are there any special requirements for the paths that the schema.json and .graphql files hold?
+### 3. Are there any special requirements for the paths that the schema.json and .graphql files hold?
 
 Just put it under the `/main/graphql/` path, and you can add more subdirectories below, just make sure the corresponding `schema.json` and `.graphql` files are in the same directory.
 
@@ -40,7 +30,7 @@ Such as `/main/graphql/a/b/c/A.graphql` will be generate code automatically gene
 
 - **Note 2**：at least one `.graphql` file exists in a folder that holds `schema.json`, otherwise you'll get build errors.
 
-### 5. When you initialize ABCoreKitClient, you pass in a `ResponseFetcher` object. What's the use?
+### 4. When you initialize ABCoreKitClient, you pass in a `ResponseFetcher` object. What's the use?
 
 This is used to define different fetch rules, Apollo provides a total of five rules for our direct use, specific see `ApolloResponseFetchers.java`:
 
@@ -64,7 +54,7 @@ This is used to define different fetch rules, Apollo provides a total of five ru
 
   > Fetch data from cache and net at the same time, and the data will return multiple times to the View layer 
 
-### 6. What are the requirements for the content format of the graphql file?
+### 5. What are the requirements for the content format of the graphql file?
 
 Usually, we will first in [OCAP Playground] (https://ocap.arcblock.io/) write and test we need to query, mutation, subscription business statement, make sure no problem, then copy the corresponding content to we created in the Project `.graphql`.
 

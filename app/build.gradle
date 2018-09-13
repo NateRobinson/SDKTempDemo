@@ -39,7 +39,7 @@ dependencies {
 	/**
 	 * ArcBlock sdk
 	 */
-	def absdkversion = "0.1.8"
+	def absdkversion = "0.2.1"
 	implementation("com.arcblock.corekit:absdkcorekit:$absdkversion:release@aar") {
 		transitive = true
 	}

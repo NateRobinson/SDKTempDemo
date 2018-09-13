@@ -8,7 +8,6 @@ import com.apollographql.apollo.response.CustomTypeValue;
 import com.arcblock.corekit.ABCoreKitClient;
 import com.arcblock.corekit.config.CoreKitConfig;
 import com.arcblock.temp.btc.type.CustomType;
-import com.facebook.stetho.Stetho;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -17,8 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 
 public class TempApplication extends Application {
@@ -41,7 +38,6 @@ public class TempApplication extends Application {
 		/**
 		 * for output logs
 		 */
-		Stetho.initializeWithDefaults(this);
 		Timber.plant(new Timber.DebugTree());
 
 		/**
@@ -57,25 +53,6 @@ public class TempApplication extends Application {
 	 * init a BTC ABCoreClient
 	 */
 	private void initBtcClient(){
-		/**
-		 *  use HttpLoggingInterceptor
-		 */
-		HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-			@Override
-			public void log(String message) {
-				Timber.tag("temp-btc-okhttp-log").d(message);
-			}
-		});
-
-		/**
-		 * new a OkHttpClient with loggingInterceptor
-		 */
-		OkHttpClient okHttpClient = new OkHttpClient.Builder()
-				.addInterceptor(loggingInterceptor)
-				.build();
-
-		loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
 		/**
 		 * custom a date type for code gen
 		 */
@@ -103,9 +80,9 @@ public class TempApplication extends Application {
 		/**
 		 * build a ABCoreClient
 		 */
-		mABCoreClientBtc = ABCoreKitClient.builder(this, CoreKitConfig.API_TYPE_BTC)
+		mABCoreClientBtc = ABCoreKitClient.builder(this, CoreKitConfig.ApiType.API_TYPE_BTC)
 				.addCustomTypeAdapter(CustomType.DATETIME, dateCustomTypeAdapter)
-				.setOkHttpClient(okHttpClient)
+				.setOpenOkHttpLog(true)
 				.setDefaultResponseFetcher(ApolloResponseFetchers.CACHE_AND_NETWORK)
 				.build();
 	}
@@ -115,29 +92,10 @@ public class TempApplication extends Application {
 	 */
 	private void initEthClient(){
 		/**
-		 *  use HttpLoggingInterceptor
-		 */
-		HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-			@Override
-			public void log(String message) {
-				Timber.tag("temp-eth-okhttp-log").d(message);
-			}
-		});
-
-		/**
-		 * new a OkHttpClient with loggingInterceptor
-		 */
-		OkHttpClient okHttpClient = new OkHttpClient.Builder()
-				.addInterceptor(loggingInterceptor)
-				.build();
-
-		loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-		/**
 		 * build a ABCoreClient
 		 */
-		mABCoreClientEth = ABCoreKitClient.builder(this, CoreKitConfig.API_TYPE_ETH)
-				.setOkHttpClient(okHttpClient)
+		mABCoreClientEth = ABCoreKitClient.builder(this, CoreKitConfig.ApiType.API_TYPE_ETH)
+				.setOpenOkHttpLog(true)
 				.setOpenSocket(true)
 				.setDefaultResponseFetcher(ApolloResponseFetchers.CACHE_AND_NETWORK)
 				.build();
