@@ -4,7 +4,12 @@ apply plugin: 'com.apollographql.android'
 apollo {
     useJavaBeansSemanticNaming = true
     //custom type define
-    //customTypeMapping['DateTime'] = "java.util.Date"
+    customTypeMapping = [
+            "Date" : "java.util.Date",
+            "BigNumber" : "java.math.BigInteger",
+            "FunctionInput" : "java.lang.String",
+            "Long" : "java.lang.Long",
+    ]
 }
 
 android {
@@ -39,10 +44,7 @@ dependencies {
 	/**
 	 * ArcBlock sdk
 	 */
-	def absdkversion = "0.2.1"
-	implementation("com.arcblock.corekit:absdkcorekit:$absdkversion:release@aar") {
-		transitive = true
-	}
+	implementation 'com.arcblock.corekit:absdkcorekit:0.3.5'
 	// other libraries
 	implementation 'com.yuyh.json:jsonviewer:1.0.6'
 }

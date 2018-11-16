@@ -2,15 +2,12 @@ package com.arcblock.temp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.arcblock.corekit.ABCoreKitClient;
 import com.arcblock.corekit.CoreKitSubscription;
-import com.arcblock.corekit.bean.CoreKitBean;
-import com.arcblock.corekit.viewmodel.CoreKitSubscriptionViewModel;
+import com.arcblock.corekit.CoreKitSubscriptionResultListener;
 import com.arcblock.temp.eth.NewBlockMinedSubscription;
 import com.google.gson.Gson;
 import com.yuyh.jsonviewer.library.JsonRecyclerView;
@@ -53,33 +50,18 @@ public class SubscriptionDemoActivity extends AppCompatActivity {
      * do sub
      */
     private void doSub() {
-        NewBlockMinedSubscriptionHelper newBlockMinedSubscriptionHelper = new NewBlockMinedSubscriptionHelper(this, TempApplication.INSTANCE.abCoreKitClientEth());
-        newBlockMinedSubscriptionHelper.setCoreKitSubCallBack(new CoreKitSubscriptionViewModel.CoreKitSubCallBack<NewBlockMinedSubscription.Data>() {
+        CoreKitSubscription<NewBlockMinedSubscription.Data, NewBlockMinedSubscription> coreKitSubscription = new CoreKitSubscription<>(this, TempApplication.INSTANCE.abCoreKitClientEth()
+                , new NewBlockMinedSubscription(), NewBlockMinedSubscription.Data.class);
+        coreKitSubscription.setResultListener(new CoreKitSubscriptionResultListener<NewBlockMinedSubscription.Data>() {
             @Override
-            public void onNewData(CoreKitBean<NewBlockMinedSubscription.Data> coreKitBean) {
-                // you can do your business logic with data here
-                jsonView.bindJson(new Gson().toJson(coreKitBean));
+            public void onSuccess(NewBlockMinedSubscription.Data data) {
+                jsonView.bindJson(new Gson().toJson(data));
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
             }
         });
-    }
-
-    /**
-     * NewBlockMinedSubscriptionHelper for NewBlockMinedSubscription
-     */
-    private class NewBlockMinedSubscriptionHelper extends CoreKitSubscription<NewBlockMinedSubscription.Data, NewBlockMinedSubscription> {
-
-        public NewBlockMinedSubscriptionHelper(FragmentActivity activity, ABCoreKitClient client) {
-            super(activity, client);
-        }
-
-        @Override
-        public NewBlockMinedSubscription getSubscription() {
-            return new NewBlockMinedSubscription();
-        }
-
-        @Override
-        public Class<NewBlockMinedSubscription.Data> getResultDataClass() {
-            return NewBlockMinedSubscription.Data.class;
-        }
     }
 }
